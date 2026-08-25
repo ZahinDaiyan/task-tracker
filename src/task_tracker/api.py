@@ -26,3 +26,15 @@ def get_task_list():
            }
         )
     return result
+
+@app.get("/tasks/{task_id}", response_model=Task)
+def get_task_by_id(task_id:int):
+   exiting_task = get_task(task_id)
+   if exiting_task :
+      result = {
+         'id' : exiting_task[0],
+         'title' : exiting_task[1]
+      }
+      return result
+   else:
+      raise HTTPException(status_code=404, detail="Taks not found")
